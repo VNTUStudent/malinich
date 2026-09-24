@@ -67,7 +67,8 @@ function validate_response($post)
         $answer = trim($post[$key] ?? '');
         if ($question['type'] === 'textarea') {
             if (mb_strlen($answer) > 1000) {
-                $errors[] = 'Поле «' . $question['label'] . '» не може перевищувати 1000 символів.';
+                $errors[] = 'Поле «' . $question['label'] . '» не може'
+                    . ' перевищувати 1000 символів.';
             }
             continue;
         }
@@ -128,7 +129,8 @@ function save_response_db($response, $filename)
 {
     $stmt = db()->prepare(
         'INSERT INTO responses
-         (name, email, album, source, rating, concert, suggestions, submitted_at, filename)
+         (name, email, album, source, rating, concert,
+          suggestions, submitted_at, filename)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
     $stmt->execute([
@@ -185,7 +187,8 @@ function export_responses_json()
 function render_survey_form($errors, $values)
 {
     if ($errors) {
-        echo '<div class="error-box"><strong>Будь ласка, виправте такі помилки:</strong><ul>';
+        echo '<div class="error-box">';
+        echo '<strong>Будь ласка, виправте такі помилки:</strong><ul>';
         foreach ($errors as $error) {
             echo '<li>' . h($error) . '</li>';
         }
@@ -250,7 +253,8 @@ function render_login_form($error)
     echo '<form class="survey-form login-form" method="post" action="admin.php">';
     echo '<input type="hidden" name="action" value="login">';
     echo '<div class="field"><label for="username">Логін:</label>';
-    echo '<input type="text" id="username" name="username" maxlength="50" required></div>';
+    echo '<input type="text" id="username" name="username"';
+    echo ' maxlength="50" required></div>';
     echo '<div class="field"><label for="password">Пароль:</label>';
     echo '<input type="password" id="password" name="password" required></div>';
     echo '<button class="btn" type="submit">Увійти</button>';
@@ -295,7 +299,8 @@ function render_admin_panel($responses)
         echo ' onsubmit="return confirm(\'Видалити цю відповідь?\')">';
         echo '<input type="hidden" name="action" value="delete">';
         echo '<input type="hidden" name="id" value="' . (int)$response['id'] . '">';
-        echo '<button class="btn btn-danger" type="submit">Видалити</button></form></td>';
+        echo '<button class="btn btn-danger" type="submit">Видалити';
+        echo '</button></form></td>';
         echo '</tr>';
     }
     echo '</tbody></table>';
