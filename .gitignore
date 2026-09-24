@@ -7,3 +7,4 @@ lab5/
 *.pdf
 *.png
 .DS_Store
+lab6/build_docx.py
