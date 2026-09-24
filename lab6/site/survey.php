@@ -15,9 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response = build_response($_POST);
         $filename = save_response_file($response);
         save_response_db($response, $filename);
-        $response['filename'] = $filename;
-        $saved = $response;
+        header('Location: survey.php?saved=' . urlencode($filename));
+        exit;
     }
+}
+
+if (isset($_GET['saved'])) {
+    $saved = find_response_by_filename(basename($_GET['saved']));
 }
 
 require __DIR__ . '/templates/header.php';

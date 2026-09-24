@@ -149,6 +149,13 @@ function load_responses()
     return db()->query('SELECT * FROM responses ORDER BY id DESC')->fetchAll();
 }
 
+function find_response_by_filename($filename)
+{
+    $stmt = db()->prepare('SELECT * FROM responses WHERE filename = ?');
+    $stmt->execute([$filename]);
+    return $stmt->fetch() ?: null;
+}
+
 function delete_response($id)
 {
     $stmt = db()->prepare('SELECT filename FROM responses WHERE id = ?');
