@@ -127,7 +127,8 @@ function db()
 function save_response_db($response, $filename)
 {
     $stmt = db()->prepare(
-        'INSERT INTO responses (name, email, album, source, rating, concert, suggestions, submitted_at, filename)
+        'INSERT INTO responses
+         (name, email, album, source, rating, concert, suggestions, submitted_at, filename)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
     $stmt->execute([
@@ -175,7 +176,8 @@ function delete_response($id)
 function export_responses_json()
 {
     header('Content-Type: application/json; charset=utf-8');
-    header('Content-Disposition: attachment; filename="survey-export-' . date('Y-m-d_H-i-s') . '.json"');
+    $name = 'survey-export-' . date('Y-m-d_H-i-s') . '.json';
+    header('Content-Disposition: attachment; filename="' . $name . '"');
     echo json_encode(load_responses(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     exit;
 }
