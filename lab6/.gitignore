@@ -1,0 +1,6 @@
+site/survey/*
+!site/survey/.gitkeep
+site/data/*
+!site/data/.gitkeep
+runtime/
+.env

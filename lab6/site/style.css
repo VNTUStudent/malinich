@@ -1,0 +1,243 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    color: #222222;
+    margin: 0;
+}
+
+#header {
+    background-color: #16324f;
+    color: #ffffff;
+    padding: 24px 30px;
+}
+
+#header h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+#header p {
+    margin: 10px 0 0 0;
+    color: #b8c9dc;
+    font-size: 14px;
+}
+
+.menu {
+    background-color: #1f4468;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.menu a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 12px 20px;
+}
+
+.menu a:hover {
+    background-color: #3a6ea5;
+}
+
+.menu a:active {
+    background-color: #0d2137;
+}
+
+#container {
+    display: flex;
+    align-items: flex-start;
+    background-color: #ffffff;
+}
+
+#sidebar {
+    flex: 0 0 240px;
+    padding: 20px;
+    background-color: #f4f7fa;
+    border-right: 1px solid #d6dee8;
+}
+
+#sidebar h2 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #16324f;
+}
+
+#content {
+    flex: 1;
+    padding: 20px 30px;
+}
+
+#content h2 {
+    color: #16324f;
+    border-bottom: 2px solid #d6dee8;
+    padding-bottom: 6px;
+}
+
+#content a {
+    color: #1a56a0;
+}
+
+#footer {
+    background-color: #16324f;
+    color: #b8c9dc;
+    font-size: 13px;
+    padding: 14px 30px;
+}
+
+#footer a {
+    color: #8fb8e0;
+}
+
+.data-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #c5cdd8;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #16324f;
+    color: #ffffff;
+}
+
+.info-box {
+    background-color: #eaf2fb;
+    border-left: 4px solid #3a6ea5;
+    padding: 12px 16px;
+    margin: 16px 0;
+}
+
+.survey-form fieldset {
+    border: 1px solid #c5cdd8;
+    margin: 0 0 18px 0;
+    padding: 12px 18px 16px;
+}
+
+.survey-form legend {
+    font-weight: bold;
+    color: #16324f;
+    padding: 0 6px;
+}
+
+.survey-form .option {
+    display: block;
+    margin: 7px 0;
+    cursor: pointer;
+}
+
+.survey-form input[type="text"],
+.survey-form input[type="email"],
+.survey-form input[type="password"],
+.survey-form select,
+.survey-form textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px 10px;
+    border: 1px solid #c5cdd8;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.survey-form textarea {
+    resize: vertical;
+}
+
+.field {
+    margin: 0 0 16px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #16324f;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #1a56a0;
+    color: #ffffff;
+    border: none;
+    padding: 10px 22px;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #16324f;
+}
+
+.btn-danger {
+    background-color: #a03030;
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+.btn-danger:hover {
+    background-color: #7c2222;
+}
+
+.error-box {
+    background-color: #fbe9e9;
+    border-left: 4px solid #a03030;
+    color: #7c2222;
+    padding: 12px 16px;
+    margin: 0 0 18px;
+}
+
+.error-box ul {
+    margin: 8px 0 0;
+}
+
+.success-box {
+    background-color: #e9f6ea;
+    border-left: 4px solid #2e7d32;
+    padding: 16px 18px;
+    margin: 0 0 18px;
+}
+
+.success-box h3 {
+    margin: 0 0 10px;
+    color: #1b5e20;
+}
+
+.success-box p {
+    margin: 6px 0;
+}
+
+.admin-bar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #f4f7fa;
+    border: 1px solid #d6dee8;
+    padding: 10px 14px;
+    margin: 0 0 16px;
+}
+
+.admin-bar form {
+    margin: 0;
+}
+
+.admin-table td,
+.admin-table th {
+    font-size: 13px;
+    vertical-align: top;
+}
+
+.login-form {
+    max-width: 400px;
+}
