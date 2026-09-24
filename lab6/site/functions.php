@@ -191,25 +191,32 @@ function render_survey_form($errors, $values)
     }
     echo '<form class="survey-form" method="post" action="survey.php">';
     echo '<div class="field"><label for="name">Ім’я респондента:</label>';
-    echo '<input type="text" id="name" name="name" maxlength="100" required value="' . h($values['name'] ?? '') . '"></div>';
+    echo '<input type="text" id="name" name="name" maxlength="100" required';
+    echo ' value="' . h($values['name'] ?? '') . '"></div>';
     echo '<div class="field"><label for="email">Email респондента:</label>';
-    echo '<input type="email" id="email" name="email" maxlength="100" required value="' . h($values['email'] ?? '') . '"></div>';
+    echo '<input type="email" id="email" name="email" maxlength="100" required';
+    echo ' value="' . h($values['email'] ?? '') . '"></div>';
     foreach (survey_questions() as $key => $question) {
         echo '<fieldset><legend>' . h($question['label']) . '</legend>';
         if ($question['type'] === 'radio') {
             foreach ($question['options'] as $option) {
                 $checked = ($values[$key] ?? '') === $option ? ' checked' : '';
-                echo '<label class="option"><input type="radio" name="' . $key . '" value="' . h($option) . '"' . $checked . ' required> ' . h($option) . '</label>';
+                echo '<label class="option"><input type="radio" name="' . $key . '"';
+                echo ' value="' . h($option) . '"' . $checked . ' required> ';
+                echo h($option) . '</label>';
             }
         } elseif ($question['type'] === 'select') {
-            echo '<select name="' . $key . '" required><option value="">— оберіть відповідь —</option>';
+            echo '<select name="' . $key . '" required>';
+            echo '<option value="">— оберіть відповідь —</option>';
             foreach ($question['options'] as $option) {
                 $selected = ($values[$key] ?? '') === $option ? ' selected' : '';
-                echo '<option value="' . h($option) . '"' . $selected . '>' . h($option) . '</option>';
+                echo '<option value="' . h($option) . '"' . $selected . '>';
+                echo h($option) . '</option>';
             }
             echo '</select>';
         } else {
-            echo '<textarea name="' . $key . '" maxlength="1000" rows="5" cols="60">' . h($values[$key] ?? '') . '</textarea>';
+            echo '<textarea name="' . $key . '" maxlength="1000" rows="5" cols="60">';
+            echo h($values[$key] ?? '') . '</textarea>';
         }
         echo '</fieldset>';
     }
@@ -221,8 +228,11 @@ function render_thank_you($response)
 {
     echo '<div class="success-box">';
     echo '<h3>Дякуємо за участь в опитуванні, ' . h($response['name']) . '!</h3>';
-    echo '<p>Вашу відповідь збережено у текстовому файлі <code>' . h($response['filename']) . '</code> у папці сайту <code>survey/</code> та додано до бази даних.</p>';
-    echo '<p><strong>Час та дата заповнення форми:</strong> ' . h($response['submitted_at']) . '</p>';
+    echo '<p>Вашу відповідь збережено у текстовому файлі <code>';
+    echo h($response['filename']) . '</code> у папці сайту <code>survey/</code>';
+    echo ' та додано до бази даних.</p>';
+    echo '<p><strong>Час та дата заповнення форми:</strong> ';
+    echo h($response['submitted_at']) . '</p>';
     echo '</div>';
     echo '<p><a class="btn" href="index.html">На головну сторінку</a></p>';
 }
@@ -230,7 +240,8 @@ function render_thank_you($response)
 function render_login_form($error)
 {
     echo '<h2>Вхід адміністратора</h2>';
-    echo '<p>Сторінка адміністрування анкети доступна лише після введення логіна та пароля.</p>';
+    echo '<p>Сторінка адміністрування анкети доступна лише';
+    echo ' після введення логіна та пароля.</p>';
     if ($error) {
         echo '<div class="error-box">' . h($error) . '</div>';
     }
@@ -249,14 +260,22 @@ function render_admin_panel($responses)
     echo '<h2>Панель адміністратора — відповіді на анкету</h2>';
     echo '<div class="admin-bar">';
     echo '<span>Адміністратор: <strong>' . h($_SESSION['admin']) . '</strong></span>';
-    echo '<span>Вхід: <strong>' . h($_SESSION['login_time']) . '</strong> (зафіксовано у $_SESSION)</span>';
-    echo '<form method="post" action="admin.php"><input type="hidden" name="action" value="export">';
+    echo '<span>Вхід: <strong>' . h($_SESSION['login_time']) . '</strong>';
+    echo ' (зафіксовано у $_SESSION)</span>';
+    echo '<form method="post" action="admin.php">';
+    echo '<input type="hidden" name="action" value="export">';
     echo '<button class="btn" type="submit">Експортувати у JSON</button></form>';
     echo '<a class="btn btn-danger" href="logout.php">Вийти</a>';
     echo '</div>';
-    echo '<p>Усього відповідей: <strong>' . count($responses) . '</strong>. Кожна відповідь також збережена окремим текстовим файлом у папці <code>survey/</code>.</p>';
+    echo '<p>Усього відповідей: <strong>' . count($responses) . '</strong>.';
+    echo ' Кожна відповідь також збережена окремим текстовим файлом';
+    echo ' у папці <code>survey/</code>.</p>';
+    $columns = ['№', 'Дата', 'Ім’я', 'Email', 'Улюблений альбом', 'Джерело',
+        'Оцінка', 'Концерт', 'Побажання', 'Файл', ''];
     echo '<table class="data-table admin-table"><thead><tr>';
-    echo '<th>№</th><th>Дата</th><th>Ім’я</th><th>Email</th><th>Улюблений альбом</th><th>Джерело</th><th>Оцінка</th><th>Концерт</th><th>Побажання</th><th>Файл</th><th></th>';
+    foreach ($columns as $column) {
+        echo '<th>' . $column . '</th>';
+    }
     echo '</tr></thead><tbody>';
     foreach ($responses as $response) {
         echo '<tr>';
@@ -270,7 +289,8 @@ function render_admin_panel($responses)
         echo '<td>' . h($response['concert']) . '</td>';
         echo '<td>' . h($response['suggestions']) . '</td>';
         echo '<td><code>' . h($response['filename']) . '</code></td>';
-        echo '<td><form method="post" action="admin.php" onsubmit="return confirm(\'Видалити цю відповідь?\')">';
+        echo '<td><form method="post" action="admin.php"';
+        echo ' onsubmit="return confirm(\'Видалити цю відповідь?\')">';
         echo '<input type="hidden" name="action" value="delete">';
         echo '<input type="hidden" name="id" value="' . (int)$response['id'] . '">';
         echo '<button class="btn btn-danger" type="submit">Видалити</button></form></td>';
