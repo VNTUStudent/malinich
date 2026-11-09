@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жарти про гурт — Океан Ельзи</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header">
+        <h1>Океан Ельзи — Всеукраїнський тур 2026</h1>
+        <p>Офіційний сайт всеукраїнського туру легендарного українського гурту. Незабутня атмосфера, улюблені хіти та нова програма!</p>
+    </div>
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html">Головна</a></li>
+            <li><a href="about.html">Про гурт</a></li>
+            <li><a href="tour.html">Тур 2026</a></li>
+            <li><a href="media.html">Медіа</a></li>
+            <li><a href="jokes.html">Жарти</a></li>
+            <li><a href="table.html">Виконавці</a></li>
+            <li><a href="survey.php">Анкета</a></li>
+            <li><a href="contacts.html">Контакти</a></li>
+        </ul>
+    </nav>
+    <div id="container">
+        <div id="sidebar">
+            <h2>Розділи сайту</h2>
+            <ul>
+                <li><a href="media.html">Медіа</a> — дискографія та відео.</li>
+                <li><a href="jokes.html">Жарти</a> — динамічне завантаження
+                    жартів без перезавантаження сторінки (AJAX).</li>
+                <li><a href="table.html">Виконавці</a> — динамічна таблиця
+                    учасників туру з даними JSON.</li>
+                <li><a href="survey.php">Анкета</a> — опитування, яке надсилається
+                    без перезавантаження сторінки.</li>
+            </ul>
+        </div>
+        <div id="content">
+            <section>
+                <h2>Жарти про гурт і концертне життя</h2>
+                <p>Ця сторінка за допомогою об'єкта <code>XMLHttpRequest</code>
+                підвантажує текстовий файл <code>jokes.txt</code> із сервера
+                у фоновому режимі та показує випадковий жарт. Сторінка не
+                перезавантажується — дані довантажуються самі.</p>
+                <div class="info-box" id="joke-box">
+                    <p id="joke-text">Натисніть кнопку, щоб підвантажити випадковий жарт із файлу.</p>
+                </div>
+                <button class="btn" id="joke-btn" type="button">Показати випадковий жарт</button>
+                <p id="joke-status"></p>
+            </section>
+        </div>
+    </div>
+    <div id="footer">
+        <p>© 2026 Офіційний сайт туру «Океан Ельзи». <a href="https://okeanelzy.com">okeanelzy.com</a></p>
+    </div>
+    <script>
+        document.getElementById('joke-btn').addEventListener('click', function () {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var jokes = this.responseText.split('\n').filter(function (line) {
+                        return line.trim() !== '';
+                    });
+                    if (jokes.length === 0) {
+                        document.getElementById('joke-status').textContent = 'Файл з жартами порожній.';
+                        return;
+                    }
+                    var index = Math.floor(Math.random() * jokes.length);
+                    document.getElementById('joke-text').textContent = jokes[index];
+                    document.getElementById('joke-status').textContent =
+                        'Завантажено файл jokes.txt: знайдено ' + jokes.length +
+                        ' жартів, показано № ' + (index + 1) + '. Сторінку не перезавантажено.';
+                } else if (this.readyState == 4) {
+                    document.getElementById('joke-status').textContent =
+                        'Помилка завантаження файлу: статус ' + this.status + '.';
+                }
+            };
+            xhttp.open('GET', 'jokes.txt', true);
+            xhttp.send();
+        });
+    </script>
+</body>
+</html>

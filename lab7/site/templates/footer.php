@@ -1,0 +1,11 @@
+        </div>
+    </div>
+    <div id="footer">
+        <p>© 2026 Офіційний сайт туру «Океан Ельзи».
+        <a href="https://okeanelzy.com">okeanelzy.com</a></p>
+    </div>
+    <?php foreach (($page_scripts ?? []) as $script): ?>
+    <script src="<?= h($script) ?>"></script>
+    <?php endforeach; ?>
+</body>
+</html>

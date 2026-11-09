@@ -8,3 +8,4 @@ lab5/
 *.png
 .DS_Store
 lab6/build_docx.py
+lab7/build_docx.py

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виконавці туру — динамічна таблиця</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header">
+        <h1>Океан Ельзи — Всеукраїнський тур 2026</h1>
+        <p>Офіційний сайт всеукраїнського туру легендарного українського гурту. Незабутня атмосфера, улюблені хіти та нова програма!</p>
+    </div>
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html">Головна</a></li>
+            <li><a href="about.html">Про гурт</a></li>
+            <li><a href="tour.html">Тур 2026</a></li>
+            <li><a href="media.html">Медіа</a></li>
+            <li><a href="jokes.html">Жарти</a></li>
+            <li><a href="table.html">Виконавці</a></li>
+            <li><a href="survey.php">Анкета</a></li>
+            <li><a href="contacts.html">Контакти</a></li>
+        </ul>
+    </nav>
+    <div id="container">
+        <div id="sidebar">
+            <h2>Розділи сайту</h2>
+            <ul>
+                <li><a href="jokes.html">Жарти</a> — завантаження текстового
+                    файлу через XMLHttpRequest.</li>
+                <li><a href="table.html">Виконавці</a> — ця сторінка: динамічна
+                    таблиця з даними JSON (jQuery).</li>
+                <li><a href="survey.php">Анкета</a> — надсилання анкети без
+                    перезавантаження сторінки.</li>
+            </ul>
+        </div>
+        <div id="content">
+            <section>
+                <h2>Виконавці туру 2026 — динамічна таблиця</h2>
+                <p>Таблиця будується за допомогою бібліотеки jQuery: дані
+                отримуються AJAX-запитом <code>$.getJSON</code> зі статичного
+                файлу <code>data.json</code>. Оновлення даних виконується
+                кнопкою «Оновити таблицю», доступне сортування за іменем
+                (параметр <code>name</code>) та за гуртами (параметр
+                <code>affiliation</code>).</p>
+                <div class="table-controls">
+                    <button class="btn" id="refresh-btn" type="button">Оновити таблицю</button>
+                    <button class="btn" id="sort-name-btn" type="button">Сортувати за іменем</button>
+                    <button class="btn" id="sort-affiliation-btn" type="button">Сортувати за гуртом</button>
+                </div>
+                <p id="table-status"></p>
+                <table class="data-table" id="artists-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Ім'я</th>
+                            <th>Гурт (affiliation)</th>
+                            <th>Роль</th>
+                            <th>Місто</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+    <div id="footer">
+        <p>© 2026 Офіційний сайт туру «Океан Ельзи». <a href="https://okeanelzy.com">okeanelzy.com</a></p>
+    </div>
+    <script src="jquery.min.js"></script>
+    <script>
+        var sortKey = null;
+
+        function renderTable(rows) {
+            var tbody = $('#artists-table tbody').empty();
+            $.each(rows, function (i, artist) {
+                var row = $('<tr></tr>');
+                row.append($('<td></td>').text(i + 1));
+                row.append($('<td></td>').text(artist.name));
+                row.append($('<td></td>').text(artist.affiliation));
+                row.append($('<td></td>').text(artist.role));
+                row.append($('<td></td>').text(artist.city));
+                tbody.append(row);
+            });
+        }
+
+        function loadArtists() {
+            $('#table-status').text('Завантаження даних...');
+            $('#refresh-btn').prop('disabled', true);
+
+            $.getJSON('data.json', function (data) {
+                if (sortKey) {
+                    data.sort(function (a, b) {
+                        return String(a[sortKey]).localeCompare(
+                            String(b[sortKey]), 'uk'
+                        );
+                    });
+                }
+                renderTable(data);
+                var message = 'Отримано ' + data.length + ' записів'
+                    + ' зі статичного файлу data.json (AJAX, jQuery).';
+                if (sortKey === 'name') {
+                    message += ' Сортування: за іменем (name).';
+                } else if (sortKey === 'affiliation') {
+                    message += ' Сортування: за гуртом (affiliation).';
+                }
+                $('#table-status').text(message);
+            }).fail(function () {
+                $('#table-status').text('Помилка завантаження файлу data.json.');
+            }).always(function () {
+                $('#refresh-btn').prop('disabled', false);
+            });
+        }
+
+        $('#refresh-btn').on('click', loadArtists);
+        $('#sort-name-btn').on('click', function () {
+            sortKey = 'name';
+            loadArtists();
+        });
+        $('#sort-affiliation-btn').on('click', function () {
+            sortKey = 'affiliation';
+            loadArtists();
+        });
+
+        $(function () {
+            loadArtists();
+        });
+    </script>
+</body>
+</html>
