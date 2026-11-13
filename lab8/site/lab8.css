@@ -1,0 +1,15 @@
+#content { min-width: 0; }
+#content a.btn { color: white; }
+.table-wrap { overflow-x: auto; }
+.data-table td { overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+    #container { display: block; }
+    #sidebar { border-right: 0; padding: 16px; }
+    #content { padding: 16px; }
+    .menu a { padding: 12px; }
+    #header { padding: 20px 16px; }
+}
+
+.admin-table td, .admin-table th { font-size: 14px; }
+.admin-table td { min-width: 95px; }
+.admin-table td p { margin: 0 0 10px; }

@@ -1,0 +1,17 @@
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: lab8/Dockerfile
+    container_name: okean-elzy-rest
+    restart: unless-stopped
+    environment:
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASS: ${ADMIN_PASS:?set ADMIN_PASS in .env}
+    volumes:
+      - ${SURVEY_SOURCE:-./runtime/survey}:/var/lib/lab-survey:ro
+    networks:
+      - web
+networks:
+  web:
+    external: true
